@@ -159,9 +159,14 @@ void loop()
   
   // Truck lights byte
   serial_byte = Serial.read();
+int left_val= (serial_byte >> 5)&0x01;
+
+int right_val= (serial_byte >> 4)&0x01;
+int sound= (left_val|right_val);
+
   digitalWriteFromBit(LEFT_INDICATOR,  serial_byte, 5);  
   digitalWriteFromBit(RIGHT_INDICATOR, serial_byte, 4);
-  
+  ditalWrite(SoundPort,sound);
   // Warning lights bytes
 
   serial_byte = Serial.read();  
