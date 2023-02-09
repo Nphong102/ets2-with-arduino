@@ -1,10 +1,6 @@
 #include <ShiftRegister74HC595.h>
 ShiftRegister74HC595<2> sr(6, 4, 5);
-//#define DATA 6
-//
-//#define LATCH 5
-//
-//#define CLOCK 4
+
 #define DATA1 9
 
 #define LATCH1 8
@@ -15,13 +11,10 @@ ShiftRegister74HC595<2> sr(6, 4, 5);
 #include <Arduino.h>
 #include <TM1637Display.h>
 
-// Module connection pins (Digital Pins)
+
 #define CLK 2
 #define DIO 3
-//#include <Adafruit_GFX.h>  // Include core graphics library for the display
-//#include <Adafruit_SSD1306.h>  // Include Adafruit_SSD1306 library to drive the display
-//Adafruit_SSD1306 display;  // Create display
-//#include <Fonts/FreeMono9pt7b.h>  // Add a custom font
+
 
 TM1637Display display(CLK, DIO);
 
@@ -29,17 +22,7 @@ const int SPEEDO_PIN     = A1;
 const int RPM_PIN        = A0;
 const int fuel_pin       = A2;
 const int SOUND_SIGN     = A3;
-//const int LEFT_SIGN      = 2;
-//const int RIGHT_SIGN     = 3;
-//const int HIGHT_BEEM     = 4;
-//const int LOW_BEEM       = 5;
-//const int LOW_FUEL       = 6;
-//const int BREAK          = 7;
-//
-//const int LOI            = 12;
-//const int W_SPEED        = 11;
-//const int W_RPM          = 13;
-// Servo variables
+
 Servo speedo;
 Servo rpm;
 Servo fuel;
@@ -108,19 +91,7 @@ void setup() {
 
   rpm.attach(RPM_PIN);
   rpm.write(180);
-  // Initialise LEDs
-  //  pinMode(LEFT_SIGN, OUTPUT);
-  //  pinMode(RIGHT_SIGN, OUTPUT);
-  //  pinMode(HIGHT_BEEM, OUTPUT);
-  //  pinMode(LOW_BEEM, OUTPUT);
-  //  pinMode(LOW_FUEL, OUTPUT);
-  //  pinMode(BREAK, OUTPUT);
 
-//  pinMode(LATCH, OUTPUT);
-//
-//  pinMode(CLOCK, OUTPUT);
-//
-//  pinMode(DATA, OUTPUT);
     pinMode(LATCH1, OUTPUT);
 
   pinMode(CLOCK1, OUTPUT);
@@ -147,14 +118,7 @@ uint8_t pinValues1[] = { B00000001,B00000001 };
   delay(2000);
 
   
-//  pinMode(W_SPEED, OUTPUT);
-//  pinMode(W_RPM, OUTPUT);
-  //  digitalWrite(LEFT_SIGN, 0);
-  //  digitalWrite(RIGHT_SIGN, 0);
-  //  digitalWrite(HIGHT_BEEM, 0);
-  //  digitalWrite(LOW_BEEM, 0);
-  //  digitalWrite(LOW_FUEL, 0);
-  //  digitalWrite(BREAK, 0);
+
   uint8_t data[] = { 0xff, 0xff, 0xff, 0xff };
   display.setSegments(data);
   delay(500);
@@ -163,71 +127,7 @@ uint8_t pinValues1[] = { B00000001,B00000001 };
   
   sr.setAllLow(); // set all pins LOW
   delay(500); 
-//  digitalWrite(LATCH, LOW);
-//
-//  shiftOut(DATA, CLOCK, LSBFIRST, 0b11111111);
-//
-//  digitalWrite(LATCH, HIGH);
-//
-//  delay(200);
-//  digitalWrite(LATCH, LOW);
-//
-//  shiftOut(DATA, CLOCK, LSBFIRST, 0b00000000);
-//
-//  digitalWrite(LATCH, HIGH);
-//
-//  delay(200);
-//  digitalWrite(LATCH, LOW);
-//
-//  shiftOut(DATA, CLOCK, LSBFIRST, 0b11111111);
-//
-//  digitalWrite(LATCH, HIGH);
-//
-//  delay(200);
-//  digitalWrite(LATCH, LOW);
-//
-//  shiftOut(DATA, CLOCK, LSBFIRST, 0b00000000);
-//
-//  digitalWrite(LATCH, HIGH);
-//
-//  delay(200);
-//  for (int i = 1; i < 256; i = i << 1)
-//
-//  {
-//
-//    digitalWrite(LATCH, LOW);
-//
-//    shiftOut(DATA, CLOCK, LSBFIRST, i);
-//
-//    digitalWrite(LATCH, HIGH);
-//
-//    delay(200);
-//
-//  }
-//  for (int i = 256; i > 0; i = i >> 1)
-//
-//  {
-//
-//    digitalWrite(LATCH, LOW);
-//
-//    shiftOut(DATA, CLOCK, LSBFIRST, i);
-//
-//    digitalWrite(LATCH, HIGH);
-//
-//    delay(200);
-//
-//  }
-//  digitalWrite(LATCH, LOW);
-//
-//  shiftOut(DATA, CLOCK, LSBFIRST,  0b00000000);
-//
-//  digitalWrite(LATCH, HIGH);
-//  delay(1000);  digitalWrite(LATCH1, LOW);
-//
-//  shiftOut(DATA1, CLOCK1, LSBFIRST,  0b00000000);
-//
-//  digitalWrite(LATCH1, HIGH);
-  //  digitalWrite(LOI, 0);
+
   digitalWrite(SOUND_SIGN, 0);
   delay(500);
   speedo.write(0);
@@ -235,15 +135,7 @@ uint8_t pinValues1[] = { B00000001,B00000001 };
   fuel.write(0);
   uint8_t  data2 [] = {0x40, 0x76, 0x06, 0x40}; // -HI-
   display.setSegments(data2);
-  //  digitalWrite(LEFT_SIGN, 1);
-  //  digitalWrite(RIGHT_SIGN, 1);
-  //  digitalWrite(HIGHT_BEEM, 1);
-  //  digitalWrite(LOW_BEEM, 1);
-  //  digitalWrite(LOW_FUEL, 1);
-  //  digitalWrite(BREAK, 1);
-  //
-  //  digitalWrite(LOI, 1);
-  //  digitalWrite(SOUND_SIGN, 0);
+ 
   delay(500);
   for (int i = 0; i <= 180; i++) {
     speedo.write(i);
@@ -255,31 +147,14 @@ uint8_t pinValues1[] = { B00000001,B00000001 };
     delay(3);
   }
   fuel.write(100);
-  //  digitalWrite(LEFT_SIGN, 0);
-  //  digitalWrite(RIGHT_SIGN, 0);
-  //  digitalWrite(HIGHT_BEEM, 0);
-  //  digitalWrite(LOW_BEEM, 0);
-  //  digitalWrite(LOW_FUEL, 0);
-  //  digitalWrite(BREAK, 0);
-  //
-  //  digitalWrite(LOI, 0);
-  //  digitalWrite(SOUND_SIGN, 0);
+ 
   lcd.clear();
   lcd.print("Wait");
   // Wait a second to ensure serial data isn't from re-programming
   delay(500);
   lcd.clear();
   lcd.print("Ready");
-  // display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // Initialize display with the I2C address of 0x3C
-  //  display.clearDisplay();  // Clear the buffer
-  //  display.setTextColor(WHITE);  // Set color of the text
-  //  display.setRotation(0);  // Set orientation. Goes from 0, 1, 2 or 3
-  //  display.setTextWrap(false);  // By default, long lines of text are set to automatically “wrap” back to the leftmost column.
-  //                               // To override this behavior (so text will run off the right side of the display - useful for
-  //                               // scrolling marquee effects), use setTextWrap(false). The normal wrapping behavior is restored
-  //                               // with setTextWrap(true).
-  //  display.dim(0);  //Set brightness (0 is maximun and 1 is a little dim)
-
+ 
 
   display.clear();
   uint8_t data3 [] = {0x40, 0x3d, 0x3f, 0x40};
@@ -353,16 +228,7 @@ void Show_Gear(int value) {
   }
   display.setSegments(gear);
 }
-//void OLED() {
-// serial_byte = Serial.read();
-//  display.clearDisplay();  // Clear the display so we can refresh
-//  display.setFont(&FreeMono9pt7b);  // Set a custom font
-//  display.setTextSize(0);  // Set text size. We are using a custom font so you should always use the text size of 0
-//  // Print text:
-//  display.setCursor(0, 10);  // (x,y)
-//  display.println("Hello");  // Text or value to print
-//display.println(serial_byte);
-//}
+
 void loop() {
 
   if (Serial.available() < 16)
@@ -389,29 +255,16 @@ void loop() {
   skip_serial_byte();                                       // Oil temperature
   skip_serial_byte();                                       // Water temperature
   skip_serial_byte();
-  // Battery voltage
+  
   serial_byte = Serial.read();
   Show_Gear(serial_byte);
-  //skip_serial_byte();                                       //SHOW_GEAR
+  
 
   // Truck lights byte
   byte num1 = Serial.read();
-
-//  digitalWrite(LATCH, LOW);
-//  shiftOut(DATA, CLOCK, LSBFIRST,  serial_byte);
-//  digitalWrite(LATCH, HIGH);
-
-byte num2  = Serial.read();
+  byte num2  = Serial.read();
  uint8_t pinValues[] = { num1,num2 }; 
   sr.setAll(pinValues); 
-//  digitalWrite(LATCH1, LOW);
-//  shiftOut(DATA1, CLOCK1, LSBFIRST,  serial_byte);
-//  digitalWrite(LATCH1, HIGH);
-//  serial_byte = Serial.read();
-//  digitalWriteFromBit_sound(A2, serial_byte);
-
-  // Warning lights bytes
-
   skip_serial_byte();
 
   // Enabled flags
