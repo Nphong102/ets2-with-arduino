@@ -184,21 +184,21 @@ SCSAPI_VOID telemetry_frame_end(const scs_event_t /*event*/, const void *const /
    if (int(telemetry.engine_rpm ) > 2000){
 	   warring_rpm = 1;
    }
-   int total, seconds, hours, minutes;
-total = abs(int(telemetry.navigation_time));
-minutes = total / 60;
-seconds = total % 60;
-hours = minutes / 60;
-minutes = minutes % 60;
-  const float fuel_ratio = telemetry.fuel /  telemetry.fuel_capacity;
-  float w_e = telemetry.wear_engine *100;
-	float w_t = telemetry.wear_transmission *100;
-	float w_c = telemetry.wear_chassis *100;
-  const float total_wear = max(max(w_e,w_c),w_t);
-
-  bool c_e_r =0;
-  bool c_e_b =0;
-  bool c_e_g = 0;
+int total, seconds, hours, minutes;
+	total = abs(int(telemetry.navigation_time));
+	minutes = total / 60;
+	seconds = total % 60;
+	hours = minutes / 60;
+	minutes = minutes % 60;
+const float fuel_ratio = telemetry.fuel /  telemetry.fuel_capacity;
+float w_e = telemetry.wear_engine *100;
+float w_t = telemetry.wear_transmission *100;
+float w_c = telemetry.wear_chassis *100;
+const float total_wear = max(max(w_e,w_c),w_t);
+//Set the wreak light
+bool c_e_r =0;
+bool c_e_b =0;
+bool c_e_g = 0;
   if ((total_wear > 10) || (w_e >5)) 
   {
   c_e_b = 1;
@@ -242,7 +242,7 @@ else if ((total_wear > 30) || (w_e >13))
   PUT_BYTE_FLOAT(telemetry.fuel *    			GETFLTOPT("factor_oil_temperature")); //MUC XANG
   PUT_BYTE_FLOAT(telemetry.water_temperature *  GETFLTOPT("factor_water_temperature"));
   PUT_BYTE_FLOAT(telemetry.battery_voltage *    GETFLTOPT("factor_battery_voltage"));
-  PUT_BYTE(abs(int(show_gear)));
+  PUT_BYTE(abs(int(show_gear))); //Show number grear to 4 digit 7seg
   
   // Pack data for LEDs into bytes
   
@@ -257,12 +257,7 @@ else if ((total_wear > 30) || (w_e >13))
   2. Low air
   1. Parking Brake
   0. Fuel Low 
-  */
-
-
-	
-
-	
+  */	
   PUT_BYTE(PACKBOOL(
   telemetry.light_lblinker, 
   telemetry.light_rblinker, 
@@ -272,15 +267,15 @@ else if ((total_wear > 30) || (w_e >13))
   telemetry.brake_air_pressure_warning, 
   telemetry.parking_brake,
   telemetry.brake_air_pressure_emergency));
-  
+  //extra light to show 
   PUT_BYTE(PACKBOOL(
   c_e_r,
   c_e_b,
   c_e_g,
   telemetry.light_reverse,
-telemetry.water_temperature_warning,
- telemetry.light_parking,
- warring_speed,
+  telemetry.water_temperature_warning,
+  telemetry.light_parking,
+  warring_speed,
   telemetry.fuel_warning));	
   // Warning lights
   /*   extra light
