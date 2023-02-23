@@ -259,23 +259,23 @@ else if ((total_wear > 30) || (w_e >13))
   0. Fuel Low 
   */	
   PUT_BYTE(PACKBOOL(
-  telemetry.light_lblinker, 
-  telemetry.light_rblinker, 
-  telemetry.light_high_beam, 
-  telemetry.light_low_beam,
-  telemetry.oil_pressure_warning,
   telemetry.brake_air_pressure_warning, 
+  telemetry.oil_pressure_warning, 
+  0, 
+  telemetry.light_high_beam,
   telemetry.parking_brake,
-  telemetry.brake_air_pressure_emergency));
+  telemetry.brake_air_pressure_emergency, 
+  telemetry.water_temperature_warning,
+ ));
   //extra light to show 
   PUT_BYTE(PACKBOOL(
-  c_e_r,
-  c_e_b,
-  c_e_g,
+telemetry.light_lblinker,
+  telemetry.light_rblinker,
+  0,
   telemetry.light_reverse,
-  telemetry.water_temperature_warning,
-  telemetry.light_parking,
-  warring_speed,
+  0,
+  telemetry.light_low_beam,
+  check_eng,
   telemetry.fuel_warning));	
   // Warning lights
   /*   extra light
